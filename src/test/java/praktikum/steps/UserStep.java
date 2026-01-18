@@ -1,31 +1,33 @@
 package praktikum.steps;
 
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
+import praktikum.constants.Endpoints;
 import praktikum.models.User;
 
 import static io.restassured.RestAssured.given;
 
 public class UserStep {
 
-    // Создание нового пользователя
+    @Step("Создание нового пользователя")
     public Response create(User user) {
         return given()
-                .header("Content-type", "application/json")  // Указываем тип контента
-                .body(user)                                  // Передаем объект User (автоматически конвертируется в JSON)
+                .header("Content-type", "application/json")
+                .body(user)
                 .when()
-                .post("/auth/register");                     // Отправляем POST запрос
+                .post(Endpoints.REGISTER);
     }
 
-    // Вход пользователя (с объектом User)
+    @Step("Вход пользователя (с объектом User)")
     public Response login(User user) {
         return given()
                 .header("Content-type", "application/json")
                 .body(user)
                 .when()
-                .post("/auth/login");
+                .post(Endpoints.LOGIN);
     }
 
-    // Вход пользователя (с email и паролем)
+    @Step("Вход пользователя (с email и паролем)")
     public Response login(String email, String password) {
         String requestBody = String.format(
                 "{\"email\": \"%s\", \"password\": \"%s\"}",
@@ -36,23 +38,23 @@ public class UserStep {
                 .header("Content-type", "application/json")
                 .body(requestBody)
                 .when()
-                .post("/auth/login");
+                .post(Endpoints.LOGIN);
     }
 
-    // Удаление пользователя
+    @Step("Удаление пользователя")
     public Response delete(String accessToken) {
         return given()
-                .header("Authorization", accessToken)  // Передаем токен в заголовке
+                .header("Authorization", accessToken)
                 .when()
-                .delete("/auth/user");
+                .delete(Endpoints.USER);
     }
 
-    // Извлечение access token из ответа
+    @Step("Извлечение access token из ответа")
     public String extractAccessToken(Response response) {
         return response.then().extract().path("accessToken");
     }
 
-    // Извлечение сообщения об ошибке
+    @Step("Извлечение сообщения об ошибке")
     public String extractErrorMessage(Response response) {
         return response.then().extract().path("message");
     }

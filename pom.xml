@@ -88,6 +88,11 @@
                         <artifactId>aspectjweaver</artifactId>
                         <version>${aspectj.version}</version>
                     </dependency>
+                    <dependency>
+                        <groupId>com.google.code.gson</groupId>
+                        <artifactId>gson</artifactId>
+                        <version>2.13.2</version>
+                    </dependency>
                 </dependencies>
             </plugin>
             <!-- подключение плагина allure-maven для вызова функций Allure с помощью Maven -->

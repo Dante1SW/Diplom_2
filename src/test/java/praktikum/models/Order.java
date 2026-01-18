@@ -1,6 +1,10 @@
 package praktikum.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Order {
+
+    @SerializedName("ingredients")
     private String[] ingredients;
 
     // Конструктор с ингредиентами
@@ -23,20 +27,5 @@ public class Order {
         this.ingredients = ingredients;
     }
 
-    // Метод для преобразования массива ингредиентов в JSON строку
-    public String ingredientsToJson() {
-        if (ingredients == null || ingredients.length == 0) {
-            return "[]";
-        }
 
-        StringBuilder sb = new StringBuilder("[");
-        for (int i = 0; i < ingredients.length; i++) {
-            sb.append("\"").append(ingredients[i]).append("\"");
-            if (i < ingredients.length - 1) {
-                sb.append(",");
-            }
-        }
-        sb.append("]");
-        return sb.toString();
-    }
 }
